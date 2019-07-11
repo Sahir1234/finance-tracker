@@ -1,14 +1,18 @@
 
-const http = require('http');
-const mysql = require('mysql');
-const twilio = require('twilio');
+class Server {
 
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "SCorp123$%^",
-  database: "user_info"
-});
+  constructor() {
+    const http = require('http');
+    const mysql = require('mysql');
+
+    var con = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "SCorp123$%^",
+      database: "user_info"
+    });
+  }
+}
 
 con.connect(function(err) {
   if (err) throw err;

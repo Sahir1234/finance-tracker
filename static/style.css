@@ -1,25 +1,21 @@
 html {
-  margin: 0;
   padding: 0;
-  color: white;
-  font-size: 1.5em;
-  font-family: Archivo, Spectral, monospace;
+  font-family: Verdana, Geneva, sans-serif;
 }
 
 body {
-  background-image: url("background.jpg");
+  height: 100%;
+  margin: 0;
+  background-image: url("background.png");
   background-repeat: repeat;
   background-attachment: fixed;
-  margin: 0;
 }
 
 h1 {
   text-align: center;
   line-height: 1.0;
-  text-shadow: 3px 2px red;
   width: auto;
-  font-family: Georgia, Helvetica, serif;
-  font-size: 3.5em;
+  font-size: 3.0em;
   font-weight: bold;
 }
 
@@ -29,24 +25,145 @@ p {
   margin-right: auto;
   text-align: justify;
   max-width: 700px;
+  font-size: 1.5em;
 }
 
-/* Add a black background color to the top navigation */
-.topnav {
-  background-color: black;
-  overflow: hidden;
-}
-
-.topnav a {
-  float: left;
+/* Style tab links */
+.tabLink {
+  background-color: slategray;
   color: white;
-  text-align: center;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
   padding: 14px 16px;
-  text-decoration: none;
   font-size: 17px;
+  width: 50%;
 }
 
-.container {
+.tabLink:hover {
+  opacity: 0.5;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabContent {
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+#loginPortal {
+  border-radius: 50px;
+  border: 10px solid deepskyblue;
+  padding: 10px;
+  max-width: 700px;
+  height: 500px;
+  background-color: white;
+  margin-left: auto;
+  margin-right:auto;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+
+input[type= username], input[type= password], 
+input[type=firstName], input[type=lastName],
+input[type=newUsername], input[type=newPassword] {
+  border-radius: 15px;
+  width: 80%;
+  padding: 15px;
+  margin-left: 25px;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=username]:focus, input[type=password]:focus, 
+input[type=first_name]:focus, input[type=last_name]:focus,
+input[type=newUsername]:focus, input[type=newPassword]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+.loginButton {
+  background-color: navy;
+  color: white;
+  border-radius: 25px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 30px;
+  padding: 16px 20px;
+  font-size: 1em;
+  border: none;
+  cursor: pointer;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.signUpButton {
+  display: inline-block;
+  background-color: black;
+  color: white;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  width: 25%;
+  padding: 5px 15px;
+  font-size: 1em;
+  margin-inline-start: 1em;
+}
+
+.loginButton:hover, .signUpButton:hover, .signUpConfirmation:hover {
+  opacity: 0.7;
+}
+
+/* The Modal */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: black; /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.closeButton {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.closeButton:hover {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.signUpConfirmation {
+  display: inline-block;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  width: 35%;
+  padding: 5px 15px;
+  font-size: 1.5em;
 }

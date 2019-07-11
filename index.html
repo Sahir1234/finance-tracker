@@ -4,15 +4,126 @@
 <head>
   <link rel="stylesheet" href="static/style.css">
   <link rel="shortcut icon" type="image/x-icon" href="static/favicon.ico">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script type="text/javascript" src="./static/client.js"></script>
+  <script type="text/javascript" src="./static/jquery-3.4.1.min.js"></script>
+
 </head>
 
 <body>
 
-  <div class="topnav">
-    <a>S.A.M., the Finance Friend!</a>
+  <button class="tabLink" onclick="openPage('Home', this)"  id="defaultOpen">Home</button>
+  <button class="tabLink" onclick="openPage('About', this)">About</button>
+
+  <div id="Home" class="tabContent">
+    <div id="loginPortal">
+      <h1>
+        Log In:
+      </h1>
+      <p style="margin-left: 25px; font-weight: bold">
+        Enter Username:
+      </p>
+      <input type="username" placeholder="USERNAME">
+      <p style="margin-left: 25px; font-weight: bold">
+        Enter Password:
+      </p>
+      <input type="password" placeholder="PASSWORD">
+      <button type="button" class="loginButton" onclick=login()>Track My Finances!</button>
+
+      <p style="margin-left: 25px; font-weight: bold; font-size: 1em">
+        <br>
+        Don't have an account? Check this out:
+        <button type="button" class="signUpButton" onclick="document.getElementById(
+          'signUpForm').style.display = 'block'">Sign Up!</button>
+      </p>
+    </div>
   </div>
 
-  <p>My first paragraph.</p>
+
+
+  <div id="signUpForm" class="modal" style="display: none">
+    <div class="modal-content">
+      <span class="closeButton" onclick="document.getElementById('signUpForm').style.display = 'none';">
+        &times;
+      </span>
+      <h1>
+        Create Your Account:
+      </h1>
+
+      <p style="font-size: 1em; margin-left: 25px">
+        ***Maximum of 20 Characters for each field***
+      </p>
+
+      <p style="margin-left: 25px; font-weight: bold">
+        Enter Your First Name:
+      </p>
+      <input type="firstName" placeholder="SCOTT">
+
+      <p style="margin-left: 25px; font-weight: bold">
+        Enter Your Last Name:
+      </p>
+      <input type="lastName" placeholder="MESCUDI">
+      
+      <p style="margin-left: 25px; font-weight: bold">
+        Enter Your Username:
+      </p>
+      <input type="newUsername" placeholder="KID_CUDI">
+
+      <p style="margin-left: 25px; font-weight: bold">
+        Enter Password:
+      </p>
+      <input type="newPassword" placeholder="SOUNDTRACK2MYLIFE">
+
+      <p style="margin-left: auto; margin-right: auto; text-align: center; font-size: 1em">
+        <br>
+        <button type="button" class="signUpConfirmation" onclick=signUp()>Confirm My Account!</button>
+      </p>
+
+    </div>
+  </div>
+
+
+
+
+
+  <div id="About" class="tabContent" style="color:white">
+    <h1>
+      My Online Finance Tracker!
+    </h1>
+
+    <p>
+      (That name is only temporary)
+    </p>
+
+    <p>
+      This application lets you track your expenses over time. You can sign up with an
+      account using a username and a password. Whenever, you make a purchase, you can login to 
+      the homepage and add it to your "journal". You can  also see a graph of your spending over
+      time and your individual entries. Hopefully, this helps you keep track of your expenses.
+    </p>
+
+    <p>
+      If you have wish to contribute to this project, please contact the developer at sahir.mody@gmail.com. Thanks!
+    </p>
+  </div>
+
+
+
+
+
+  <script>
+    document.getElementById("defaultOpen").click();
+
+    // When the user clicks anywhere outside of the modal, close it
+    var modal = document.getElementById("signUpForm");
+    window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+}
+  </script>
 
 </body>
 </html>
