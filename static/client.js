@@ -17,6 +17,8 @@ function openPage(pageName, element) {
   element.style.backgroundColor = "lightblue";
 }
 
+
+
 function credentialsEntered (username, password) {
   if(!username) {
     alert("PLEASE ENTER A USERNAME!")
@@ -28,6 +30,8 @@ function credentialsEntered (username, password) {
   return false;
 }
 
+
+
 function login() {
   var user = $( "input[type=username]" ).val();
   var pass = $( "input[type=password]" ).val();
@@ -35,11 +39,20 @@ function login() {
   if(!credentialsEntered(user, pass)) {
     return;
   }
+  
+  var xhttp = new XMLHttpRequest();
 
-  alert(user);
-  alert(pass);
-  alert('NOT RECOGNIZED, ACCESS NOT APPROVED');
+  document.getElementById("loginPortal").style.display="none";
+  document.getElementById("accountHome").style.display="block";
+
+  var name = "GET NAME FROM SQL"
+
+  $(document).ready(function () {
+    $("#name").text(name);
+  });
 }
+
+
 
 function signUp() {
   var fname = $( "input[type=firstName]" ).val();
@@ -50,7 +63,7 @@ function signUp() {
   if(!fname) {
     alert("PLEASE ENTER YOUR FIRST NAME!");
     return;
-  else if(!lname) {
+  } else if(!lname) {
     alert("PLEASE ENTER YOUR LAST NAME!");
     return;
   } else if(!credentialsEntered(user, pass)) {
@@ -65,4 +78,72 @@ function signUp() {
 
   document.getElementById('signUpForm').style.display = 'none';
   alert("SEND MESSAGE ONCE SQL DATABASE HAS BEEN CONENCTED PROPERLY AND ACCOUNT HAS SUCCESSFULLY BEEN CREATED");
+}
+
+
+
+function logOut() {
+  document.getElementById("loginPortal").style.display="block";
+  document.getElementById("accountHome").style.display="none";
+
+  // clear text fields to remove user information
+  document.getElementById("loginUser").value = "";
+  document.getElementById("loginPass").value = "";
+}
+
+
+function validEntryFields(description, cost, date) {
+
+  if(!description || !cost || !date) {
+    alert("PLEASE FILL IN ALL THE FIELDS!");
+    return false;
+  }
+
+  if(description.length > 250) {
+    alert("PLEASE SHORTEN YOUR DESCRIPTION OF THE EXPENSE!");
+  } else if(date.length > 45) {
+    alert("PLEASE SHORTEN YOUR DESCRIPTION OF THE DATE/TIME OF PURCHASE!");
+  } else if(isNaN(Number(String(cost)))) {
+    alert("PLEASE ENTER A VALID DOLLAR AMOUNT!");
+  } else {
+    return true;
+  }
+
+  return false;
+}
+
+
+function submitNewExpense() {
+  var description = $( "input[type=description]" ).val();
+  var cost = $( "input[type=cost]" ).val();
+  var date = $( "input[type=date]" ).val();
+
+  if(!validEntryFields(description, cost, date)) {
+    return;
+  }
+
+  document.getElementById("newExpense").style.display="none";
+  alert("SQL RESPONSE ONCE EXPENSE HAS BEEN ADDED TO THE DATABASE");
+
+}
+
+
+function submitEdittedExpense() {
+  var entry = $( "input[type=editEntry]" ).val();
+  var description = $( "input[type=editDescription]" ).val();
+  var cost = $( "input[type=editCost]" ).val();
+  var date = $( "input[type=editDate]" ).val();
+
+  if(!entry) {
+    alert("PLEASE ENTER THE ENTRY NUMBER!");
+    return;
+  } else if(isNaN(parseInt(Number(String(entry))))) {
+    alert("PLEASE ENTER A VALID ENTRY NUMBER!")
+    return;
+  } else if(!validEntryFields(description, cost, date)) {
+    return;
+  }
+
+  document.getElementById("editExpense").style.display="none";
+  alert("SQL RESPONSE ONCE EXPENSE HAS BEEN CHANGED IN THE DATABASE");
 }

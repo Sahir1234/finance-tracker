@@ -66,9 +66,7 @@ p {
 }
 
 
-input[type= username], input[type= password], 
-input[type=firstName], input[type=lastName],
-input[type=newUsername], input[type=newPassword] {
+input {
   border-radius: 15px;
   width: 80%;
   padding: 15px;
@@ -78,43 +76,39 @@ input[type=newUsername], input[type=newPassword] {
   background: #f1f1f1;
 }
 
-input[type=username]:focus, input[type=password]:focus, 
-input[type=first_name]:focus, input[type=last_name]:focus,
-input[type=newUsername]:focus, input[type=newPassword]:focus {
+input:focus {
   background-color: #ddd;
   outline: none;
 }
 
+button[type=button] {
+  color: white;
+  font-size: 1em;
+  border: none;
+  cursor: pointer;
+}
+
 .loginButton {
   background-color: navy;
-  color: white;
   border-radius: 25px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 30px;
   padding: 16px 20px;
-  font-size: 1em;
-  border: none;
-  cursor: pointer;
   width: 50%;
   display: flex;
   justify-content: center;
 }
 
 .signUpButton {
-  display: inline-block;
   background-color: black;
-  color: white;
-  border-radius: 15px;
-  border: none;
-  cursor: pointer;
   width: 25%;
   padding: 5px 15px;
-  font-size: 1em;
   margin-inline-start: 1em;
+  border-radius: 15px;
 }
 
-.loginButton:hover, .signUpButton:hover, .signUpConfirmation:hover {
+button:hover {
   opacity: 0.7;
 }
 
@@ -128,9 +122,10 @@ input[type=newUsername]:focus, input[type=newPassword]:focus {
   top: 0;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
+  overflow-y: auto; /* Enable scroll if needed */
   background-color: black; /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  animation: blowUp .25s forwards;
 }
 
 /* Modal Content */
@@ -140,30 +135,70 @@ input[type=newUsername]:focus, input[type=newPassword]:focus {
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  animation: blowUp .25s forwards;
+}
+
+@keyframes blowUp {
+  0% {
+    transform:scale(0);
+    opacity:0;
+  }
+  100% {
+    transform:scale(1);
+    opacity:1;
+  }
 }
 
 /* The Close Button */
 .closeButton {
-  color: #aaaaaa;
+  color: black;
   float: right;
   font-size: 28px;
   font-weight: bold;
 }
 
 .closeButton:hover {
-  color: #000;
+  color: red;
   text-decoration: none;
   cursor: pointer;
 }
 
 .signUpConfirmation {
-  display: inline-block;
   background-color: #4CAF50;
-  color: white;
+  width: 40%;
+  padding: 15px 20px;
+  font-size: 3em;
   border-radius: 15px;
-  border: none;
-  cursor: pointer;
-  width: 35%;
+}
+
+.logOutButton {
+  background-color: black;
+  width: 25%;
   padding: 5px 15px;
-  font-size: 1.5em;
+  margin-inline-start: 5em;
+  border-radius: 15px;
+}
+
+.newExpenseButton {
+  background-color:#4CAF50;
+  width: 50%;
+  padding: 10px 30px;
+  display: inline-block;
+}
+
+.submitNewExpenseButton, .submitEditButton {  
+  background-color: #4CAF50;
+  width: 40%;
+  padding: 15px 20px;
+  font-size: 3em;
+  border-radius: 15px;
+}
+
+.editExpenseButton {
+  background-color: tomato;
+  width: 50%;
+  padding: 10px 30px;
+  display: inline-block;
 }
