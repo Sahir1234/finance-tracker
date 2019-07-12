@@ -2,13 +2,13 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="static/style.css">
-  <link rel="shortcut icon" type="image/x-icon" href="static/favicon.ico">
+  <link rel="stylesheet" href="./assets/style.css">
+  <link rel="shortcut icon" type="image/x-icon" href="./assets/favicon.ico">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <script type="text/javascript" src="./static/client.js"></script>
-  <script type="text/javascript" src="./static/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="main.js"></script>
+  <script type="text/javascript" src="./assets/jquery-3.4.1.min.js"></script>
 
 </head>
 
@@ -49,7 +49,7 @@
         Hi <span id="name">Human</span>!
         <button type="button" class="logOutButton" onclick="logOut()">Log Out</button>
       </p>
-      
+
       <p>
         THE JOURNAL WILL BE SHOWN HERE
       </p>
@@ -78,7 +78,7 @@
         <h1>
           Log Your Expense:
         </h1>
-    
+
         <p style="font-size: 1em; margin-left: 25px">
           (You Can Also Enter Your Income Here By Entering a Negative Cost)
         </p>
@@ -116,7 +116,7 @@
         <h1>
           Edit Your Entry:
         </h1>
-    
+
         <p style="margin-left: 25px; font-weight: bold">
           Please Enter the Entry Number You'd Like to Edit:
         </p>
@@ -168,7 +168,7 @@
         Enter Your Last Name:
       </p>
       <input type="lastName" placeholder="MESCUDI">
-      
+
       <p style="margin-left: 25px; font-weight: bold">
         Enter Your Username:
       </p>
@@ -200,9 +200,9 @@
 
     <p>
       This application lets you track your expenses over time. You can sign up with an
-      account using a username and a password. Whenever, you make a purchase, you can login to 
+      account using a username and a password. Whenever, you make a purchase, you can login to
       the homepage and add it to your "journal". You can  also see a graph of your spending over
-      time and your individual entries. Hopefully, this helps you keep track of your expenses and be 
+      time and your individual entries. Hopefully, this helps you keep track of your expenses and be
       more financially aware.
     </p>
 
@@ -216,12 +216,40 @@
 
 
   <script>
+
+
+    function logOut() {
+      document.getElementById("loginPortal").style.display="block";
+      document.getElementById("accountHome").style.display="none";
+
+      // clear text fields to remove user information
+      document.getElementById("loginUser").value = "";
+      document.getElementById("loginPass").value = "";
+    }
+
+    /*
+    Animation for the tabs on the page
+    */
+    function openPage(pageName, element) {
+      var i, tabContent, tablinks;
+      tabContent = document.getElementsByClassName("tabContent");
+      for (i = 0; i < tabContent.length; i++) {
+       tabContent[i].style.display = "none";
+      }
+      tabLinks = document.getElementsByClassName("tabLink");
+      for (i = 0; i < tabLinks.length; i++) {
+        tabLinks[i].style.backgroundColor = "";
+      }
+      document.getElementById(pageName).style.display = "block";
+      element.style.backgroundColor = "lightblue";
+    }
     document.getElementById("defaultOpen").click();
 
     // When the user clicks anywhere outside of the modal, close it
     var signUp = document.getElementById("signUpForm");
     var newExpense = document.getElementById("newExpense");
     var editExpense = document.getElementById("editExpense");
+
     window.onclick = function(event) {
     if (event.target == signUp) {
       signUp.style.display = "none";
@@ -230,6 +258,7 @@
     } else if(event.target == editExpense) {
       editExpense.style.display = "none";
     }
+
   }
   </script>
 

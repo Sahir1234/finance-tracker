@@ -1,22 +1,64 @@
-const maxNameLength = 20;
+// const http = require('http');
+// const url = require('url');
+// const mysql = require('mysql');
 
 /*
-Animation for the tabs on the page
-*/
-function openPage(pageName, element) {
-  var i, tabContent, tablinks;
-  tabContent = document.getElementsByClassName("tabContent");
-  for (i = 0; i < tabContent.length; i++) {
-    tabContent[i].style.display = "none";
-  }
-  tabLinks = document.getElementsByClassName("tabLink");
-  for (i = 0; i < tabLinks.length; i++) {
-    tabLinks[i].style.backgroundColor = "";
-  }
-  document.getElementById(pageName).style.display = "block";
-  element.style.backgroundColor = "lightblue";
-}
+const con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "SCorp123$%^",
+  database: "user_info"
+});
 
+con.connect(function(err) {
+  if (err) throw err;
+  var query = "SELECT * FROM meta_data"
+  con.query(query, function (err, result, fields) {
+    if (err) throw err;
+    console.log(result[0].username);
+    
+    console.log('Closing Connection...');
+    con.end(function(err) {
+      if (err) {
+        return console.log('error:' + err.message);
+      }
+      console.log('Closed the Database Connection Successfully!');
+    });
+    
+  });
+});
+*/
+
+/*
+const express = require('express')
+const app = express()
+const path = require('path')
+const port = 3000
+
+/*
+* Route to render HTML Page
+*
+app.get('/', (req, res) => {
+    res.sendFile('index.html', {
+        root: path.join(__dirname, './')
+    })
+})
+
+app.listen(port, () => console.log('App listening on port 3000'))
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+const maxNameLength = 20;
 
 
 function credentialsEntered (username, password) {
@@ -81,17 +123,6 @@ function signUp() {
 }
 
 
-
-function logOut() {
-  document.getElementById("loginPortal").style.display="block";
-  document.getElementById("accountHome").style.display="none";
-
-  // clear text fields to remove user information
-  document.getElementById("loginUser").value = "";
-  document.getElementById("loginPass").value = "";
-}
-
-
 function validEntryFields(description, cost, date) {
 
   if(!description || !cost || !date) {
@@ -147,3 +178,5 @@ function submitEdittedExpense() {
   document.getElementById("editExpense").style.display="none";
   alert("SQL RESPONSE ONCE EXPENSE HAS BEEN CHANGED IN THE DATABASE");
 }
+
+

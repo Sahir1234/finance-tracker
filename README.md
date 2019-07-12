@@ -2,7 +2,7 @@
 
 ## Starting Up The App
 
-Install Node.js version 12 or above. This should give you the npm command as well. In the home project directory, run "npm install" and that should give you all the node modules that the project relies on. Then, you have to start the SQL server using "sudo mysql.server start". From the root project directory, you can run the server.js file. Once the server is running, open index.html to run the app and that's it.
+Install Node.js version 12 or above. This should give you the npm command as well. In the home project directory, run "npm install" and that should give you all the node modules that the project relies on. Then, you have to start the SQL server using "sudo mysql.server start". From the root project directory, you can run the main.js file. Once the server is running, open index.html to run the app and that's it.
 (Note that these are the instructions for running the app locally because I only ran it locally in development).
 
 ## Using it to Track Events
