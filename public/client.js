@@ -35,19 +35,10 @@ function login() {
   var pass = $( "input[type=password]" ).val();
 
   if(!credentialsEntered(user, pass)) {
-    return;
+    return false;
   }
-  
-  var xhttp = new XMLHttpRequest();
 
-  document.getElementById("loginPortal").style.display="none";
-  document.getElementById("accountHome").style.display="block";
-
-  var name = "GET NAME FROM SQL"
-
-  $(document).ready(function () {
-    $("#name").text(name);
-  });
+  return true;
 }
 
 
@@ -70,22 +61,22 @@ function signUp() {
 
   if(!fname) {
     alert("PLEASE ENTER YOUR FIRST NAME!");
-    return;
+    return false;
   } else if(!lname) {
     alert("PLEASE ENTER YOUR LAST NAME!");
-    return;
+    return false;
   } else if(!credentialsEntered(user, pass)) {
-    return;
+    return false;
   } else if(fname.length > maxNameLength ||
             lname.length > maxNameLength ||
             user.length > maxNameLength ||
             pass.length > maxNameLength.length) {
       alert("PLEASE OBEY THE 20 CHARACTER LIMIT WITH YOUR ENTRIES!");
-    return;
+    return false;
   }
 
   document.getElementById('signUpForm').style.display = 'none';
-  alert("SEND MESSAGE ONCE SQL DATABASE HAS BEEN CONENCTED PROPERLY AND ACCOUNT HAS SUCCESSFULLY BEEN CREATED");
+  return true;
 }
 
 
@@ -116,11 +107,11 @@ function submitNewExpense() {
   var date = $( "input[type=date]" ).val();
 
   if(!validEntryFields(description, cost, date)) {
-    return;
+    return false;
   }
 
   document.getElementById("newExpense").style.display="none";
-  alert("SQL RESPONSE ONCE EXPENSE HAS BEEN ADDED TO THE DATABASE");
+  return true;
 
 }
 
@@ -133,15 +124,15 @@ function submitEdittedExpense() {
 
   if(!entry) {
     alert("PLEASE ENTER THE ENTRY NUMBER!");
-    return;
+    return false;
   } else if(isNaN(parseInt(Number(String(entry))))) {
     alert("PLEASE ENTER A VALID ENTRY NUMBER!")
-    return;
+    return false;
   } else if(!validEntryFields(description, cost, date)) {
-    return;
+    return false;
   }
 
   document.getElementById("editExpense").style.display="none";
-  alert("SQL RESPONSE ONCE EXPENSE HAS BEEN CHANGED IN THE DATABASE");
+  return true;
 }
 
