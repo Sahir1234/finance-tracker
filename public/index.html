@@ -2,13 +2,13 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="./assets/style.css">
-  <link rel="shortcut icon" type="image/x-icon" href="./assets/favicon.ico">
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <script type="text/javascript" src="main.js"></script>
-  <script type="text/javascript" src="./assets/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="client.js"></script>
+  <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
 
 </head>
 
@@ -216,33 +216,6 @@
 
 
   <script>
-
-
-    function logOut() {
-      document.getElementById("loginPortal").style.display="block";
-      document.getElementById("accountHome").style.display="none";
-
-      // clear text fields to remove user information
-      document.getElementById("loginUser").value = "";
-      document.getElementById("loginPass").value = "";
-    }
-
-    /*
-    Animation for the tabs on the page
-    */
-    function openPage(pageName, element) {
-      var i, tabContent, tablinks;
-      tabContent = document.getElementsByClassName("tabContent");
-      for (i = 0; i < tabContent.length; i++) {
-       tabContent[i].style.display = "none";
-      }
-      tabLinks = document.getElementsByClassName("tabLink");
-      for (i = 0; i < tabLinks.length; i++) {
-        tabLinks[i].style.backgroundColor = "";
-      }
-      document.getElementById(pageName).style.display = "block";
-      element.style.backgroundColor = "lightblue";
-    }
     document.getElementById("defaultOpen").click();
 
     // When the user clicks anywhere outside of the modal, close it
