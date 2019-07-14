@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script type="text/javascript" src="client.js"></script>
+  <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+
+</head>
+
+<body>
+
+  <button class="tabLink" onclick="openPage('Home', this)"  id="defaultOpen">Home</button>
+  <button class="tabLink" onclick="openPage('About', this)">About</button>
+
+  <div id="Home" class="tabContent">
+
+    <form method="POST" action="/home" id="loginPortal">
+
+      <input type="hidden" name="action" value="logIn">
+
+      <h1>
+        Log In:
+      </h1>
+      <p style="margin-left: 25px; font-weight: bold">
+        Enter Username:
+      </p>
+      <input type="username" id="loginUser" placeholder="USERNAME" name="username" required>
+      <p style="margin-left: 25px; font-weight: bold">
+        Enter Password:
+      </p>
+      <input type="password" id="loginPass" placeholder="PASSWORD" name="password" required>
+      <button type="submit" class="loginButton">Track My Finances!</button>
+
+      <p style="margin-left: 25px; font-weight: bold; font-size: 1em">
+        <br>
+        Don't have an account? Check this out:
+        <button type="button" class="signUpButton" onclick="document.getElementById(
+          'signUpForm').style.display = 'block'">Sign Up!</button>
+      </p>
+    </form>
+  </div>
+
+
+  <form action='/' method="POST" id="signUpForm" class="modal" style="display: none" onsubmit="return signUpVerify(this)">
+    <div class="modal-content">
+      <span class="closeButton" onclick="document.getElementById('signUpForm').style.display = 'none';">
+        &times;
+      </span>
+
+      <input type="hidden" name="action" value="signUp">
+
+      <h1>
+        Create Your Account:
+      </h1>
+
+      <p style="font-size: 1em; margin-left: 25px">
+        ***Maximum of 20 Characters for each field***
+      </p>
+
+      <p style="margin-left: 25px; font-weight: bold">
+        Enter Your First Name:
+      </p>
+      <input type="firstName" name="firstName" placeholder="SCOTT" required>
+
+      <p style="margin-left: 25px; font-weight: bold">
+        Enter Your Last Name:
+      </p>
+      <input type="lastName" name="lastName" placeholder="MESCUDI" required>
+
+      <p style="margin-left: 25px; font-weight: bold">
+        Enter Your Username:
+      </p>
+      <input type="newUsername" name="newUsername" placeholder="KID_CUDI" required>
+
+      <p style="margin-left: 25px; font-weight: bold">
+        Enter Password:
+      </p>
+      <input type="newPassword" name="newPassword" placeholder="SOUNDTRACK2MYLIFE" required>
+
+      <p style="margin-left: auto; margin-right: auto; text-align: center; font-size: 1em">
+        <br>
+        <button type="submit" class="signUpConfirmation">Confirm My Account!</button>
+      </p>
+
+    </div>
+  </form>
+
+  <div id="About" class="tabContent" style="color:white; display: none">
+
+    <h1 style="font-size: 3.5em">
+      My Online Finance Tracker!
+    </h1>
+
+    <p>
+      <br>
+      This application lets you track your expenses over time. You can sign up with an
+      account and then whenever you make a purchase or even make money, you can login to
+      the homepage and add it to your "journal". You can also see a graph of your spending over
+      time and your individual entries. If necessary, you can even edit or delete entries.
+      Hopefully, this helps you keep track of your expenses and be
+      more financially aware.
+    </p>
+
+    <p>
+      <br>
+      If you wish to contribute to this project or have any suggestions, 
+      please contact the developer at sahir.mody@gmaill.com. Thanks!
+    </p>
+  </div>
+
+
+
+
+
+  <script>
+    document.getElementById("defaultOpen").click();
+
+    // When the user clicks anywhere outside of the modal, close it
+    var signUp = document.getElementById("signUpForm");
+
+    window.onclick = function(event) {
+    if (event.target == signUp) {
+      signUp.style.display = "none";
+    } 
+
+  }
+  </script>
+
+</body>
+</html>

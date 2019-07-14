@@ -1,12 +1,56 @@
 
 const mysql = require('mysql');
 const express = require('express');
+var bodyParser = require('body-parser');
 const app = express();
 const port = 2814;
 
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 app.use(express.static(__dirname + '/public'));
 
-app.listen(port, () => console.log('Server Running...'));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
+
+app.listen(port, () => console.log('Server Running at localhost:' + port));
+
+app.get('/', function(req, res) {
+  console.log("GET /");
+  res.render('index');
+});
+
+app.post('/', function(req, res) {
+  console.log("POST /");
+  if(req.body.action == 'signUp') {
+    console.log(req.body);
+    console.log("Creating Account...");
+  }
+  res.render('index');
+});
+
+app.post('/home', function(req, res) {
+  console.log("POST /home");
+  console.log(req.body);
+  if(req.body.action == 'logIn') {
+    if(validateCredentials()) {
+      res.render('home', { firstName: 'Sahir', lastName: 'Mody' });
+    } else {
+      res.redirect('/');
+    }
+  } else if(req.body.action == 'create') {
+    console.log('Creating Expense')
+  }
+
+  }
+});
+
+function validateCredentials() {
+
+  return true;
+
+}
+
 /*
 const con = mysql.createConnection({
   host: "localhost",

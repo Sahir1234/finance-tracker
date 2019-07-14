@@ -1,3 +1,4 @@
+// maximum number of characters allowed in names and passwords
 const maxNameLength = 20;
 
 /*
@@ -17,66 +18,25 @@ function openPage(pageName, element) {
   element.style.backgroundColor = "lightblue";
 }
 
-function credentialsEntered (username, password) {
-  if(!username) {
-    alert("PLEASE ENTER A USERNAME!")
-  } else if(!password) {
-    alert("PLEASE ENTER A PASSWORD!")
-  } else {
-    return true;
-  }
-  return false;
-}
+/*
 
+*/
+function signUpVerify(form) {
+  var fname = form.firstName.value;
+  var lname = form.lastName.value;
+  var user = form.newUsername.value;
+  var pass = form.newPassword.value;
 
-
-function login() {
-  var user = $( "input[type=username]" ).val();
-  var pass = $( "input[type=password]" ).val();
-
-  if(!credentialsEntered(user, pass)) {
-    return false;
-  }
-
-  return true;
-}
-
-
-function logOut() {
-   document.getElementById("loginPortal").style.display="block";
-   document.getElementById("accountHome").style.display="none";
-
-   // clear text fields to remove user information
-   document.getElementById("loginUser").value = "";
-   document.getElementById("loginPass").value = "";
-}
-
-
-
-function signUp() {
-  var fname = $( "input[type=firstName]" ).val();
-  var lname = $( "input[type=lastName]" ).val();
-  var user = $( "input[type=newUsername]" ).val();
-  var pass = $( "input[type=newPassword]" ).val();
-
-  if(!fname) {
-    alert("PLEASE ENTER YOUR FIRST NAME!");
-    return false;
-  } else if(!lname) {
-    alert("PLEASE ENTER YOUR LAST NAME!");
-    return false;
-  } else if(!credentialsEntered(user, pass)) {
-    return false;
-  } else if(fname.length > maxNameLength ||
+  if(fname.length > maxNameLength ||
             lname.length > maxNameLength ||
             user.length > maxNameLength ||
             pass.length > maxNameLength.length) {
       alert("PLEASE OBEY THE 20 CHARACTER LIMIT WITH YOUR ENTRIES!");
     return false;
+  } else {
+    return true;
   }
 
-  document.getElementById('signUpForm').style.display = 'none';
-  return true;
 }
 
 
@@ -133,6 +93,20 @@ function submitEdittedExpense() {
   }
 
   document.getElementById("editExpense").style.display="none";
+  return true;
+}
+
+function submitDeletedExpense() {
+  var entry = $( "input[type=deleteEntry]" ).val();
+  if(!entry) {
+    alert("PLEASE ENTER THE ENTRY NUMBER!");
+    return false;
+  } else if(isNaN(parseInt(Number(String(entry))))) {
+    alert("PLEASE ENTER A VALID ENTRY NUMBER!")
+    return false;
+  }
+
+  document.getElementById("deleteExpense").style.display="none";
   return true;
 }
 
