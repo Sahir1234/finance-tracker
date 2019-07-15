@@ -42,11 +42,6 @@ function signUpVerify(form) {
 
 function validEntryFields(description, cost, date) {
 
-  if(!description || !cost || !date) {
-    alert("PLEASE FILL IN ALL THE FIELDS!");
-    return false;
-  }
-
   if(description.length > 250) {
     alert("PLEASE SHORTEN YOUR DESCRIPTION OF THE EXPENSE!");
   } else if(date.length > 45) {
@@ -61,10 +56,10 @@ function validEntryFields(description, cost, date) {
 }
 
 
-function submitNewExpense() {
-  var description = $( "input[type=description]" ).val();
-  var cost = $( "input[type=cost]" ).val();
-  var date = $( "input[type=date]" ).val();
+function checkNewExpense(form) {
+  var description = form.description.value;
+  var cost =  form.cost.value;
+  var date = form.date.value;
 
   if(!validEntryFields(description, cost, date)) {
     return false;
@@ -76,16 +71,13 @@ function submitNewExpense() {
 }
 
 
-function submitEdittedExpense() {
-  var entry = $( "input[type=editEntry]" ).val();
-  var description = $( "input[type=editDescription]" ).val();
-  var cost = $( "input[type=editCost]" ).val();
-  var date = $( "input[type=editDate]" ).val();
+function checkEdittedExpense(form) {
+  var entry = form.editEntry.value;
+  var description = form.editDescription.value;
+  var cost = form.editCost.value;
+  var date = form.editDate.value;
 
-  if(!entry) {
-    alert("PLEASE ENTER THE ENTRY NUMBER!");
-    return false;
-  } else if(isNaN(parseInt(Number(String(entry))))) {
+   if(isNaN(parseInt(Number(String(entry))))) {
     alert("PLEASE ENTER A VALID ENTRY NUMBER!")
     return false;
   } else if(!validEntryFields(description, cost, date)) {
@@ -96,12 +88,9 @@ function submitEdittedExpense() {
   return true;
 }
 
-function submitDeletedExpense() {
-  var entry = $( "input[type=deleteEntry]" ).val();
-  if(!entry) {
-    alert("PLEASE ENTER THE ENTRY NUMBER!");
-    return false;
-  } else if(isNaN(parseInt(Number(String(entry))))) {
+function checkDeletedExpense(form) {
+  var entry = form.deleteEntry.value;
+  if(isNaN(parseInt(Number(String(entry))))) {
     alert("PLEASE ENTER A VALID ENTRY NUMBER!")
     return false;
   }
@@ -109,4 +98,3 @@ function submitDeletedExpense() {
   document.getElementById("deleteExpense").style.display="none";
   return true;
 }
-

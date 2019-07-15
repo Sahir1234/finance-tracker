@@ -5,6 +5,14 @@ var bodyParser = require('body-parser');
 const app = express();
 const port = 2814;
 
+
+const con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "SCorp123$%^",
+  database: "user_info"
+});
+
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.use(express.static(__dirname + '/public'));
@@ -39,10 +47,14 @@ app.post('/home', function(req, res) {
       res.redirect('/');
     }
   } else if(req.body.action == 'create') {
-    console.log('Creating Expense')
+    console.log('Creating Expense...');
+  } else if(req.body.action == 'edit') {
+    console.log('Editting Expense...');
+  } else if(req.body.action == 'delete') {
+    console.log('Deleting Expense...');
   }
+  res.render('home', { firstName: 'Sahir', lastName: 'Mody' });
 
-  }
 });
 
 function validateCredentials() {
@@ -52,12 +64,6 @@ function validateCredentials() {
 }
 
 /*
-const con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "SCorp123$%^",
-  database: "user_info"
-});
 
 con.connect(function(err) {
   if (err) throw err;

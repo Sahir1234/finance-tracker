@@ -48,7 +48,7 @@
       </div>
     </div>
   
-    <form id="newExpense" class="modal" style="display: none">
+    <form action='/home' method='POST' id="newExpense" class="modal" style="display: none" onsubmit="return checkNewExpense(this)">
       <input type="hidden" name="action" value="create">
       <div class="modal-content">
           <span class="closeButton" onclick="document.getElementById('newExpense').style.display = 'none';">
@@ -66,28 +66,28 @@
           <p style="margin-left: 25px; font-weight: bold">
               What'd You Buy? (maximum of 250 characters)
           </p>
-          <input type="description" placeholder="a whole bunch of stuff">
+          <input type="description" name="description" placeholder="a whole bunch of stuff" required>
   
           <p style="margin-left: 25px; font-weight: bold">
               How Much Was It?
           </p>
-          $<input type="cost" placeholder="100000000000">
+          $<input type="cost" name="cost" placeholder="100000000000" required>
   
           <p style="margin-left: 25px; font-weight: bold">
               When'd You Buy It? (maximum of 45 characters)
           </p>
-          <input type="date" placeholder="tomorrow">
+          <input type="date" name="date" placeholder="tomorrow" required>
   
           <p style="margin-left: auto; margin-right: auto; text-align: center; font-size: 1em">
             <br>
-            <button type="button" class="submitNewExpenseButton" onclick="submitNewExpense()">Log this Expense</button>
+            <button type="submit" class="submitNewExpenseButton">Log this Expense</button>
           </p>
   
       </div>
     </form>
   
   
-    <form id="editExpense" class="modal" style="display: none">
+    <form action='/home' method='POST' id="editExpense" class="modal" style="display: none" onsubmit="return checkEdittedExpense(this)">
       <input type="hidden" name="action" value="edit">
       <div class="modal-content">
           <span class="closeButton" onclick="document.getElementById('editExpense').style.display = 'none';">
@@ -101,32 +101,32 @@
           <p style="margin-left: 25px; font-weight: bold">
             Please Enter the Entry Number You'd Like to Edit:
           </p>
-          <input type="editEntry" placeholder="1">
+          <input type="editEntry" name= "editEntry" placeholder="1" required>
   
           <p style="margin-left: 25px; font-weight: bold">
               What'd You Buy? (maximum of 250 characters)
           </p>
-          <input type="editDescription" placeholder="a whole bunch of stuff">
+          <input type="editDescription" name="editDescription" placeholder="a whole bunch of stuff" required>
   
           <p style="margin-left: 25px; font-weight: bold">
               How Much Was It?
           </p>
-          $<input type="editCost" placeholder="100000000000">
+          $<input type="editCost" name="editCost" placeholder="100000000000" required>
   
           <p style="margin-left: 25px; font-weight: bold">
               When'd You Buy It? (maximum of 45 characters)
           </p>
-          <input type="editDate" placeholder="tomorrow">
+          <input type="editDate" name="editDate" placeholder="tomorrow" required>
   
           <p style="margin-left: auto; margin-right: auto; text-align: center; font-size: 1em">
             <br>
-            <button type="button" class="submitEditButton" onclick="submitEdittedExpense()">Change This Entry!</button>
+            <button type="submit" class="submitEditButton">Change This Entry!</button>
           </p>
   
       </div>
     </form>
   
-    <form id="deleteExpense" class="modal" style="display: none">
+    <form action='/home' method='POST' id="deleteExpense" class="modal" style="display: none" onsubmit="return checkDeletedExpense(this)">
       <input type="hidden" name="action" value="delete">
       <div class="modal-content">
           <span class="closeButton" onclick="document.getElementById('deleteExpense').style.display = 'none';">
@@ -140,11 +140,11 @@
           <p style="margin-left: 25px; font-weight: bold">
             Please Enter the Entry Number You'd Like to Delete:
           </p>
-          <input type="deleteEntry" placeholder="1">
+          <input type="deleteEntry" name="deleteEntry" placeholder="1" required>
   
           <p style="margin-left: auto; margin-right: auto; text-align: center; font-size: 1em">
             <br>
-            <button type="button" class="submitDeleteButton" onclick="submitDeletedExpense()">Delete This Entry!</button>
+            <button type="submit" class="submitDeleteButton">Delete This Entry!</button>
           </p>
   
       </div>
