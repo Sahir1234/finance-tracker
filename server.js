@@ -3,11 +3,43 @@ const mysql = require('mysql');
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-const path = require('path');
 const app = express();
 const port = 2814;
 
+/**
+ * These global variables store data for the user currently logged in. However, this makes 
+ * having multiple sessions of the app running at the same time dangerous because the threads
+ * will interfere with this data. This is one limitation of the app in its current version that
+ * I plan to fix in future updates by incoroporating Express sessions.
+ */
+var username = "";
+var fname = "";
+var lname = "";
+var data = null;
 
+/**
+ * We set the Express view engine so that it reads HTML files and uses the stylesheet
+ * and client-side scripts found in the public directory.
+ */
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+app.use(express.static(__dirname + '/public'));
+app.use(session({secret: "Shh, its a secret!", saveUninitialized: false, resave: false}));
+
+/**
+ * Body parser allows us to read HTTP requests for information
+ */
+app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.json());
+
+
+app.listen(port, () => console.log('Server Running at localhost:' + port));
+
+
+/**
+ * NOTE: If this app is installed on your local system, you will need to change
+ * this information to the data for your local MySQL databases so that the app can properly connect.
+ */
 const con = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -15,32 +47,14 @@ const con = mysql.createConnection({
   database: "user_info"
 });
 
-// currently using this global variable because it only runs locally with one session at a time
-var username = "";
-var fname = "";
-var lname = "";
-var data = null;
-
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
-app.use(express.static(__dirname + '/public'));
-
-app.use(session({
-	secret: 'secret',
-	resave: true,
-	saveUninitialized: true
-}));
-app.use(bodyParser.urlencoded({extended : true}));
-app.use(bodyParser.json());
-
-
-app.listen(port, () => console.log('Server Running at localhost:' + port));
-
 con.connect(function(err) {
   if(err) throw err;
 });
 
 
+/**
+ * 
+ */
 app.get('/', function(req, res) {
   username = "";
   fname = "";
@@ -164,12 +178,16 @@ function deletingEntry (req, res) {
   });
 }
 
+/**
+ * 
+ * 
+ * @param {object} res HTTP response 
+ */
 function refreshData (res) {
   var dataQuery = `SELECT entry_number, description, cost, date FROM expenses WHERE username = \"` + username + `\";`;
   con.query(dataQuery, function (err, nextResult) {
     if(err) throw err;
     data = JSON.stringify(nextResult);
-// its going as a string so the table is logging in a bumnch of characters but it can t find the fields
     res.render('home', { firstName: fname, lastName: lname, journalData: data });
   });
 }

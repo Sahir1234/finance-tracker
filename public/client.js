@@ -2,9 +2,9 @@
 const maxNameLength = 20;
 
 /**
- * Animation for the tabs on the home page
+ * Animation for the tabs on the main page
  * 
- * @param 
+ * @param {}
  */
 function openPage(pageName, element) {
   var i, tabContent, tablinks;
@@ -45,7 +45,13 @@ function signUpVerify(form) {
 
 }
 
-
+/**
+ * 
+ * 
+ * @param {*} description 
+ * @param {*} cost 
+ * @param {*} date 
+ */
 function validEntryFields(description, cost, date) {
 
   if(description.length > 250) {
@@ -61,7 +67,12 @@ function validEntryFields(description, cost, date) {
   return false;
 }
 
-
+/**
+ * 
+ * @param {*} form 
+ * @return {boolean} true if all of the values have been filled in for submitting 
+ * a new expense, false otherwise
+ */
 function checkNewExpense(form) {
   var description = form.description.value;
   var cost =  form.cost.value;
@@ -76,7 +87,11 @@ function checkNewExpense(form) {
 
 }
 
-
+/**
+ * 
+ * 
+ * @param {*} form 
+ */
 function checkEdittedExpense(form) {
   var entry = form.editEntry.value;
   var description = form.editDescription.value;
@@ -94,6 +109,12 @@ function checkEdittedExpense(form) {
   return true;
 }
 
+/**
+ * Checks that the entry number entered in the form to delete an expense is
+ * valid and 
+ * 
+ * @param {*} form 
+ */
 function checkDeletedExpense(form) {
   var entry = form.deleteEntry.value;
   if(isNaN(parseInt(Number(String(entry))))) {
