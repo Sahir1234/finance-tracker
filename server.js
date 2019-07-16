@@ -2,20 +2,12 @@
 const mysql = require('mysql');
 const express = require('express');
 const session = require('express-session');
+const redisStore = require('connect-redis')(session);
+const redis = require('redis');
+const client = redis.createClient();
 const bodyParser = require('body-parser');
 const app = express();
 const port = 2814;
-
-/**
- * These global variables store data for the user currently logged in. However, this makes 
- * having multiple sessions of the app running at the same time dangerous because the threads
- * will interfere with this data. This is one limitation of the app in its current version that
- * I plan to fix in future updates by incoroporating Express sessions.
- */
-var username = "";
-var fname = "";
-var lname = "";
-var data = null;
 
 /**
  * We set the Express view engine so that it reads HTML files and uses the stylesheet
@@ -24,7 +16,21 @@ var data = null;
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.use(express.static(__dirname + '/public'));
-app.use(session({secret: "Shh, its a secret!", saveUninitialized: false, resave: false}));
+
+/**
+ * We set up the session so that it connects to the Redis server so that each session saves its variables
+ * independently and multiple apps can be run at the same time. YOU MUST  START UP THE REDIS SERVER BEFORE
+ * YOU START THIS SERVER SO THAT THE USER DATA CAN BE LOGGED PROPERLY.
+ */
+app.use(session({
+  secret: "Shh, its a secret!", 
+  saveUninitialized: true, 
+  resave: false,
+  store: new redisStore({ host: 'localhost', port: 6379, client: client}),
+  cookie: {
+    maxAge: Date.now() + (7 * 24 * 60 * 60 * 1000)
+  }
+}));
 
 /**
  * Body parser allows us to read HTTP requests for information
@@ -53,28 +59,34 @@ con.connect(function(err) {
 
 
 /**
- * 
+ * Main page route for when the user first visits the site.
  */
 app.get('/', function(req, res) {
-  username = "";
-  fname = "";
-  lname = "";
-  data = null;
+  console.log(req.session);
+  req.session.username = "";
+  req.session.fname = "";
+  req.session.lname = "";
+  req.session.data = null;
   console.log("GET /");
   res.render('index', {error: null} );
 });
 
+/**
+ * Main page route for when the user submits the sign-up page or the user logs out of 
+ * 
+ */
 app.post('/', function(req, res) {
-  username = "";
-  fname = "";
-  lname = "";
-  data = null;
   console.log("POST /");
   if(req.body.action == 'signUp') {
     console.log(req.body);
     signingUp(req, res);
   } else {
-    res.render('index', {error: null});
+    req.session.destroy((err) => {
+      if(err) {
+          return console.log(err);
+      }
+      res.render('index', {error: null});
+    });
   }
 });
 
@@ -124,10 +136,10 @@ function loggingIn (req, res) {
   con.query(query, function (err, result) {
     if (err) throw err;
     if(result.length  > 0){
-      username = req.body.username;
-      fname = result[0].first_name;
-      lname = result[0].last_name;
-      refreshData(res);
+      req.session.username = req.body.username;
+      req.session.fname = result[0].first_name;
+      req.session.lname = result[0].last_name;
+      refreshData(req, res);
     } else {
       res.redirect('/');
     }
@@ -138,7 +150,7 @@ function addingEntry (req, res) {
   console.log('Creating Expense...');
 
   var findQuery = `SELECT MAX(entry_number) 
-  FROM expenses WHERE username = \"` + username + `\";`;
+  FROM expenses WHERE username = \"` + req.session.username + `\";`;
 
   con.query(findQuery, function(err, result) {
     if(err) throw err;
@@ -147,12 +159,12 @@ function addingEntry (req, res) {
       entry = result[0]['MAX(entry_number)'] + 1;
     }
     var insertQuery = `INSERT INTO expenses (username,description, date, cost, entry_number) 
-    VALUES (\"` + username + `\" , \"` +  String(req.body.description) + `\" 
+    VALUES (\"` + req.session.username + `\" , \"` +  String(req.body.description) + `\" 
     , \"` +  String(req.body.date) +`\" , \"` +  String(req.body.cost) +`\", ` + String(entry) + `);`;
 
     con.query(insertQuery, function(err) {
       if(err) throw err;
-      refreshData(res);
+      refreshData(req, res);
     });
   });
 }
@@ -161,33 +173,39 @@ function updatingEntry (req, res) {
   console.log('Editting Expense...');
   var query = `UPDATE expenses
   SET description = \"` + String(req.body.editDescription) + `\", date = \"` + String(req.body.editDate) + `\", cost = \"` + String(req.body.editCost) + `\"
-  WHERE username = \"` + username + `\" AND entry_number = ` + String(req.body.editEntry) + `;`;
+  WHERE username = \"` + req.session.username + `\" AND entry_number = ` + String(req.body.editEntry) + `;`;
   con.query(query, function (err) {
     if (err) throw err;
-    refreshData(res);
-  });
-}
-
-function deletingEntry (req, res) {
-  console.log('Deleting Expense...');
-  var query = `DELETE FROM expenses 
-  WHERE username = \"` + username + `\" AND entry_number = ` + String(req.body.deleteEntry) + `;`;
-  con.query(query, function (err) {
-    if (err) throw err;
-    refreshData(res);
+    refreshData(req, res);
   });
 }
 
 /**
  * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+function deletingEntry (req, res) {
+  console.log('Deleting Expense...');
+  var query = `DELETE FROM expenses 
+  WHERE username = \"` + req.session.username + `\" AND entry_number = ` + String(req.body.deleteEntry) + `;`;
+  con.query(query, function (err) {
+    if (err) throw err;
+    refreshData(req, res);
+  });
+}
+
+/**
+ * Refreshes the user data and renders the home page with the new data.
  * 
+ * @param {object} req HTTP response 
  * @param {object} res HTTP response 
  */
-function refreshData (res) {
-  var dataQuery = `SELECT entry_number, description, cost, date FROM expenses WHERE username = \"` + username + `\";`;
+function refreshData (req, res) {
+  var dataQuery = `SELECT entry_number, description, cost, date FROM expenses WHERE username = \"` + req.session.username + `\";`;
   con.query(dataQuery, function (err, nextResult) {
     if(err) throw err;
-    data = JSON.stringify(nextResult);
-    res.render('home', { firstName: fname, lastName: lname, journalData: data });
+    req.session.data = JSON.stringify(nextResult);
+    res.render('home', { firstName: req.session.fname, lastName: req.session.lname, journalData: req.session.data });
   });
 }
