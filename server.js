@@ -89,9 +89,16 @@ function signingUp (req, res) {
     con.query(checkQuery, function(err, result) {
       if (err) throw err;
       if(result.length > 0) {
+        console.log('Username Taken...');
         res.render('index', {error: "*** USERNAME TAKEN. SELECT A NEW ONE! ***"});
       } else {
-        var createAccountQuery = `INSERT `
+        var createAccountQuery = `INSERT INTO meta_data (first_name, last_name, username, password)
+        VALUES (\"` + String(req.body.firstName) + `\" , \"` +  String(req.body.lastName) + `\" 
+        , \"` +  String(req.body.newUsername) +`\" , \"` +  String(req.body.newPassword) +`\");`;
+        con.query(createAccountQuery, function(err) {
+          if(err) throw err;
+          res.render('index', {error: null});
+        });
       }
     });
   }
