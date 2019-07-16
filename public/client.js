@@ -1,9 +1,11 @@
 // maximum number of characters allowed in names and passwords
 const maxNameLength = 20;
 
-/*
-Animation for the tabs on the page
-*/
+/**
+ * Animation for the tabs on the home page
+ * 
+ * @param 
+ */
 function openPage(pageName, element) {
   var i, tabContent, tablinks;
   tabContent = document.getElementsByClassName("tabContent");
@@ -18,9 +20,13 @@ function openPage(pageName, element) {
   element.style.backgroundColor = "lightblue";
 }
 
-/*
+/**
+ * Checks to make sure that all of the information used to sign up
+ * is within the character limit of the SQL database
+ * 
+ * @param {form element}: 
+ */
 
-*/
 function signUpVerify(form) {
   var fname = form.firstName.value;
   var lname = form.lastName.value;

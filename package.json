@@ -2,9 +2,10 @@
   "author": "Sahir Mody sahir.mody@gmail.com (https://sahirmody.com)",
   "version": "1.0.0",
   "dependencies": {
-    "mysql": "latest",
+    "ejs": "latest",
     "express": "latest",
-    "ejs": "latest"
+    "express-session": "^1.16.2",
+    "mysql": "latest"
   },
   "name": "finance-tracker",
   "description": "Finance Tracker",

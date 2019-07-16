@@ -23,14 +23,11 @@ DROP TABLE IF EXISTS `expenses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `expenses` (
-  `account_id` int(11) unsigned zerofill NOT NULL,
+  `account_id` int(11) unsigned NOT NULL,
   `date` varchar(45) DEFAULT NULL,
   `description` varchar(250) NOT NULL,
   `value` float NOT NULL,
-  `entry_number` int(11) unsigned zerofill NOT NULL,
-  PRIMARY KEY (`account_id`),
-  UNIQUE KEY `account_id_UNIQUE` (`account_id`),
-  UNIQUE KEY `entry_number_UNIQUE` (`entry_number`)
+  `entry_number` int(11) unsigned NOT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -40,7 +37,7 @@ CREATE TABLE `expenses` (
 
 LOCK TABLES `expenses` WRITE;
 /*!40000 ALTER TABLE `expenses` DISABLE KEYS */;
-INSERT INTO `expenses` VALUES (00000000001,NULL,'This is a test!',100,00000000000);
+INSERT INTO `expenses` VALUES (00000000001,'TODAY','This is a test!',100,00000000000);
 /*!40000 ALTER TABLE `expenses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,7 +49,7 @@ DROP TABLE IF EXISTS `meta_data`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `meta_data` (
-  `account_id` int(11) unsigned zerofill NOT NULL,
+  `account_id` int(11) unsigned NOT NULL,
   `first_name` varchar(20) NOT NULL,
   `last_name` varchar(20) NOT NULL,
   `username` varchar(20) NOT NULL,
