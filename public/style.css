@@ -205,21 +205,29 @@ button:hover {
 
 .newExpenseButton {
   background-color:#4CAF50;
-  width: 33%;
+  width: 33.3%;
   padding: 10px 30px;
   display: inline-block;
 }
 
 .editExpenseButton {
   background-color: lightblue;
-  width: 33%;
+  width: 33.3%;
   padding: 10px 30px;
   display: inline-block;
 }
 
 .deleteExpenseButton {
   background-color: tomato;
-  width: 33%;
+  width: 33.3%;
   padding: 10px 30px;
   display: inline-block;
+}
+
+table, th, td {
+  color: white;
+  background-color: black;
+  border: 0.5px solid white;
+  margin-right: auto;
+  margin-left: auto;
 }

@@ -132,7 +132,7 @@ function addingEntry (req, res) {
     if(result.length > 0) {
       entry = result[0]['MAX(entry_number)'] + 1;
     }
-    var insertQuery = `INSERT INTO expenses (username,description, date, value, entry_number) 
+    var insertQuery = `INSERT INTO expenses (username,description, date, cost, entry_number) 
     VALUES (\"` + username + `\" , \"` +  String(req.body.description) + `\" 
     , \"` +  String(req.body.date) +`\" , \"` +  String(req.body.cost) +`\", ` + String(entry) + `);`;
 
@@ -146,7 +146,7 @@ function addingEntry (req, res) {
 function updatingEntry (req, res) {
   console.log('Editting Expense...');
   var query = `UPDATE expenses
-  SET description = \"` + String(req.body.editDescription) + `\", date = \"` + String(req.body.editDate) + `\", value = \"` + String(req.body.editCost) + `\"
+  SET description = \"` + String(req.body.editDescription) + `\", date = \"` + String(req.body.editDate) + `\", cost = \"` + String(req.body.editCost) + `\"
   WHERE username = \"` + username + `\" AND entry_number = ` + String(req.body.editEntry) + `;`;
   con.query(query, function (err) {
     if (err) throw err;
@@ -165,10 +165,11 @@ function deletingEntry (req, res) {
 }
 
 function refreshData (res) {
-  var dataQuery = `SELECT entry_number, description, value, date FROM expenses WHERE username = \"` + username + `\";`;
+  var dataQuery = `SELECT entry_number, description, cost, date FROM expenses WHERE username = \"` + username + `\";`;
   con.query(dataQuery, function (err, nextResult) {
     if(err) throw err;
     data = JSON.stringify(nextResult);
+// its going as a string so the table is logging in a bumnch of characters but it can t find the fields
     res.render('home', { firstName: fname, lastName: lname, journalData: data });
   });
 }

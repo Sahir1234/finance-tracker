@@ -24,23 +24,36 @@
     </div>
       
     <div>
-
-        <p style = "color: white; text-align: left">
-          <%= journalData %> 
-        </p>
+      <table style="width:100%; max-width: 1000px">
+        <tr>
+          <th>Entry Number</th>
+          <th>Description</th> 
+          <th>Cost</th>
+          <th>Date</th>
+        </tr>
+        <% data = JSON.parse(journalData); %>
+        <% for (var i = 0; i < data.length; i++) { %>
+          <tr>
+            <td><%= data[i].entry_number %></td>
+            <td><%= data[i].description %></td>
+            <td><%= data[i].cost %></td>
+            <td><%= data[i].date %></td>
+          </tr>    
+        <% } %>
+      </table>
+    </div>
   
-        <div style="display: table; margin-left: auto; margin-right:auto; width: 100%; max-width: 1000px">
-          <button type="button" class="newExpenseButton" onclick="document.getElementById(
-            'newExpense').style.display = 'block'">Enter a New Expense!</button>
+    <div style="display: table; margin-left: auto; margin-right:auto; width: 100%; max-width: 1000px">
+      <br>
+      <br>
+      <button type="button" class="newExpenseButton" onclick="document.getElementById(
+        'newExpense').style.display = 'block'">Enter a New Expense!</button>
   
-          <button type="button" class="editExpenseButton" onclick="document.getElementById(
-            'editExpense').style.display = 'block'">Edit An Entry!</button>
+      <button type="button" class="editExpenseButton" onclick="document.getElementById(
+         'editExpense').style.display = 'block'">Edit An Entry!</button>
   
-          <button type="button" class="deleteExpenseButton" onclick="document.getElementById(
-            'deleteExpense').style.display = 'block'">Delete An Entry!</button> 
-        </div>
-  
-      </div>
+      <button type="button" class="deleteExpenseButton" onclick="document.getElementById(
+        'deleteExpense').style.display = 'block'">Delete An Entry!</button> 
     </div>
   
     <form action='/home' method='POST' id="newExpense" class="modal" style="display: none" onsubmit="return checkNewExpense(this)">
