@@ -4,10 +4,13 @@ const maxNameLength = 20;
 /**
  * Animation for the tabs on the main page
  * 
- * @param {}
+ * @param {string} pageName name of the page that needs to be diplayed after the tab click
+ * @param {HTML Element} element the tab button that got clicked
  */
 function openPage(pageName, element) {
   var i, tabContent, tablinks;
+
+  // clear the pages and the tab colors so they can be reset
   tabContent = document.getElementsByClassName("tabContent");
   for (i = 0; i < tabContent.length; i++) {
     tabContent[i].style.display = "none";
@@ -16,18 +19,22 @@ function openPage(pageName, element) {
   for (i = 0; i < tabLinks.length; i++) {
     tabLinks[i].style.backgroundColor = "";
   }
+
   document.getElementById(pageName).style.display = "block";
   element.style.backgroundColor = "lightblue";
 }
 
+
+
 /**
  * Checks to make sure that all of the information used to sign up
- * is within the character limit of the SQL database
+ * is within the character limit of the SQL database fields
  * 
- * @param {form element}: 
+ * @param {HTML element} form where user enters data and where we read it from
+ * @return {boolean} true all of the fields are within the correct limits and false otherwise
  */
-
 function signUpVerify(form) {
+
   var fname = form.firstName.value;
   var lname = form.lastName.value;
   var user = form.newUsername.value;
@@ -46,11 +53,13 @@ function signUpVerify(form) {
 }
 
 /**
+ * Checks if the fields entered in one of the forms to modify journal data are
+ * within the character limits of the SQL database fields
  * 
- * 
- * @param {*} description 
- * @param {*} cost 
- * @param {*} date 
+ * @param {string} description description of the purchase
+ * @param {string} cost cost of the item purchased
+ * @param {string} date date of purchase
+ * @return {boolean} true all of the fields are within the correct limits and false otherwise
  */
 function validEntryFields(description, cost, date) {
 
@@ -67,11 +76,15 @@ function validEntryFields(description, cost, date) {
   return false;
 }
 
+
 /**
+ * Makes sure that the new expense submitted by a user conforms to the character limits of the
+ * SQL Database and returns true if they do, false otherwise. It then closes the form if the
+ * submissions are valid
  * 
- * @param {*} form 
- * @return {boolean} true if all of the values have been filled in for submitting 
- * a new expense, false otherwise
+ * @param {HTML Element} form where user enters description of purchase, cost of purchase
+ * and date of puerchase
+ * @return {boolean} true if all of the values have a correct number of characters, false otherwise
  */
 function checkNewExpense(form) {
   var description = form.description.value;
@@ -87,10 +100,14 @@ function checkNewExpense(form) {
 
 }
 
+
 /**
+ * Checks that all of the user inputs for editting an entry are valid within the constraints
+ * of the SQL database and closes the expense editting form if they are
  * 
- * 
- * @param {*} form 
+* @param {HTML Element} form where user enters description of purchase, cost of purchase
+ * and date of puerchase
+ * @return {boolean} true if all of the values entered are valid for the database, false otherwise
  */
 function checkEdittedExpense(form) {
   var entry = form.editEntry.value;
@@ -109,11 +126,13 @@ function checkEdittedExpense(form) {
   return true;
 }
 
+
 /**
- * Checks that the entry number entered in the form to delete an expense is
- * valid and 
+ * Checks that the entry number entered in the form to delete an expense is an actual number and closes 
+ * the deletion form if it is.
  * 
- * @param {*} form 
+ * @param {HTML Element} form where user enters the entry number they wish to delete
+ * @return {boolean} true if the user has entered a valid entry number and false otherwise
  */
 function checkDeletedExpense(form) {
   var entry = form.deleteEntry.value;
