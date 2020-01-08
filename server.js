@@ -51,7 +51,7 @@ app.listen(port, () => console.log('Server Running at localhost:' + port));
 const con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "SCorp123$%^",
+  password: "ENTERPASSWORDHERE",
   database: "user_info"
 });
 
